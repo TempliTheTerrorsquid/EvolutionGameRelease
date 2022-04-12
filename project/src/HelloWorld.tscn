@@ -23,4 +23,5 @@ margin_top = -35.5
 margin_right = 157.5
 margin_bottom = 35.5
 theme = SubResource( 2 )
-text = "Export Test"
+text = "Export Test
+Version 2.0"
