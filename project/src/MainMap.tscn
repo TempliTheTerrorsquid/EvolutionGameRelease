@@ -7,7 +7,13 @@
 script = ExtResource( 1 )
 
 [node name="Wolf" parent="." instance=ExtResource( 2 )]
-position = Vector2( 160, 264 )
+position = Vector2( 306, 320 )
+type = "Predator"
 
 [node name="Elk" parent="." instance=ExtResource( 2 )]
-position = Vector2( 585, 276 )
+position = Vector2( 588, 187 )
+type = "Prey"
+
+[node name="Grass" parent="." instance=ExtResource( 2 )]
+position = Vector2( 600, 449 )
+type = "Plant"
