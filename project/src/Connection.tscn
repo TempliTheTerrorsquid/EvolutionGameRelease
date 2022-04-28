@@ -7,6 +7,6 @@ _data = {
 "points": PoolVector2Array(  )
 }
 
-[node name="Connection" type="Path2D"]
+[node name="Connection" type="Path2D" groups=["connections"]]
 curve = SubResource( 1 )
 script = ExtResource( 1 )

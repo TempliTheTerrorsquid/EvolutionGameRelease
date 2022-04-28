@@ -1,19 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://src/MainMap.gd" type="Script" id=1]
-[ext_resource path="res://src/MapNode_Species.tscn" type="PackedScene" id=2]
 
 [node name="MainMap" type="Node2D"]
 script = ExtResource( 1 )
-
-[node name="Wolf" parent="." instance=ExtResource( 2 )]
-position = Vector2( 306, 320 )
-type = "Predator"
-
-[node name="Elk" parent="." instance=ExtResource( 2 )]
-position = Vector2( 588, 187 )
-type = "Prey"
-
-[node name="Grass" parent="." instance=ExtResource( 2 )]
-position = Vector2( 600, 449 )
-type = "Plant"
