@@ -1,6 +1,6 @@
 extends PathFollow2D
 
-var speed = 0.5
+var speed = 100
 var destination
 var color
 
@@ -34,13 +34,28 @@ func setup(backwards, new_payload, new_target, new_type):
 func _draw():
 	draw_circle(Vector2(0,0), size, color)
 
+var temp_counter = 0
 func _process(delta):
-	offset += speed
-	update()
-	if unit_offset == destination:
-		if type == "Nutrition":
-			target.second_next_turn_nutrition += payload
-		elif type == "Spreading":
-			target.die()
-			target.setup(payload)
-		queue_free()
+	offset += speed*delta
+#	if reached_the_end():
+#		temp_counter +=1
+#		if temp_counter > 50:
+#			print("Not delivered")
+
+func deliver_payload():
+	if type == "Nutrition":
+		target.second_next_turn_nutrition += payload
+	elif type == "Spreading":
+		target.die()
+		target.setup(payload)
+
+func reached_the_end():
+	return unit_offset == destination
+
+func disable():
+	hide()
+	set_process(false)
+	
+func enable():
+	show()
+	set_process(true)

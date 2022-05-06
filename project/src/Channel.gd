@@ -1,6 +1,6 @@
 extends Node
 
-var threshold = 10
+var threshold = 30
 var count = 0.0
 var connection
 var change_per_second = 0

@@ -34,6 +34,3 @@ func _process(delta):
 	$VBoxContainer/Label_SpikeFPS_1sec.text = "Spike FPS (worst FPS in last 1 second): " + str(last_1_second_record.min())
 	if frame_counter > 100:
 		last_1_second_record.remove(0)
-	
-	print(len(last_1_second_record))
-	print(len(last_10_seconds_record))

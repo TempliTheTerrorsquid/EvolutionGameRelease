@@ -15,6 +15,7 @@ var color
 
 #I need this becouse godot cant center text automatically, like WTF.
 var name_lentgh
+var enviroment_name_length
 
 #variables updated every turn. Displayed variables to player interpolate between these values,
 #so it seems continuous.
@@ -28,6 +29,12 @@ var grow_channel
 
 var closest_nodes = []
 var prey = []
+
+#enviroment
+#TODO: these veriables dont do anythig yet. display enviroment slot name like name label.
+var enviroment
+var enviroment_slot_type
+var enviroment_slot_type_name
 
 func _ready():
 	grow_channel = preload("res://src/Grow_channel.gd").new()
@@ -57,6 +64,7 @@ func setup(new_type):
 	$NameLabel.text = species_name
 	$NameLabel.hide()
 	$NameLabel.show()
+	$NameLabel.set_size(Vector2.ZERO)
 	name_lentgh = -$NameLabel.get_combined_minimum_size().x/2
 	
 	nutrition = initial_nutrition
@@ -66,11 +74,19 @@ func setup(new_type):
 	
 	grow_channel.growth_per_second = growth_or_death_rate
 
+func set_enviroment(enviroment_type):
+	enviroment = enviroment_type
+	enviroment_slot_type_name = enviroment
+	$EnviromentLabel.text = enviroment_slot_type_name
+	$EnviromentLabel.hide()
+	$EnviromentLabel.show()
+	$EnviromentLabel.set_size(Vector2.ZERO)
+	enviroment_name_length = -$EnviromentLabel.get_combined_minimum_size().x/2
+
 func _draw():
 	draw_circle(Vector2(0,0), size,color)
 
 func die():
-	print("died")
 	for connection in connections.values():
 		if connection.origin_species_node == self:
 			connection.end_species_node.connections.erase(self)
@@ -95,7 +111,8 @@ func interpolate_to_next_turn_target(current_turn_time_as_percentage):
 	nutrition = new_nutrition
 	size = previous_turn_size + (next_turn_size - previous_turn_size) * current_turn_time_as_percentage
 	$NutritionLabel.text = str(int(nutrition))
-	$NameLabel.rect_position = Vector2(name_lentgh,-size-20)
+	$NameLabel.rect_position = Vector2(name_lentgh, 15)
+	$EnviromentLabel.rect_position = Vector2(enviroment_name_length, -30)
 	update()
 
 #Species node AI
@@ -127,7 +144,6 @@ func assess_closest_nodes():
 					con = get_parent().create_connection(self, node)
 				con.create_channel(self, 10, "Spreading")
 				spreading_counter = 0
-				print("Spreading ", type, node.type)
 				break
 	else:
 		spreading_counter += 1

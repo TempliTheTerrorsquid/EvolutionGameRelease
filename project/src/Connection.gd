@@ -7,6 +7,8 @@ var origin_species_node
 var end_species_node
 
 var active_nutrition_nodes = []
+var front_node
+
 var nutrition_node_pool = []
 
 var channels = []
@@ -17,7 +19,6 @@ func init(origin, end):
 	curve = Curve2D.new()
 	curve.add_point(origin_species_node.position)
 	curve.add_point(end_species_node.position)
-#	update()
 	origin_species_node.connections[end] = self
 	end_species_node.connections[origin] = self
 
@@ -50,11 +51,28 @@ func _draw():
 	draw_polyline(curve.get_baked_points(), Color.red, 2.0)
 
 func next_turn(time_per_turn):
-	active_nutrition_nodes
+#	if len(active_nutrition_nodes) != 0:
+#		var node = active_nutrition_nodes.back() # takes the node closest end, so you dont have to chech all of the all the time, only the first one will do, like belts in factorio.
+	for node in active_nutrition_nodes:
+		if node.reached_the_end():
+			node.deliver_payload()
+#			active_nutrition_nodes.pop_back()
+			active_nutrition_nodes.erase(node)
+			node.disable()
+			if 	node.destination == 1:
+				node.unit_offset = 0
+			else:
+				node.unit_offset = 1
+			nutrition_node_pool.append(node) #TODO: add to node pool instead.
 
 func spawn_new_nutrition_node(direction_backwards, payload, type):
-	var nutrition_node = nutrition_node_class_ref.instance()
-	add_child(nutrition_node)
+	var nutrition_node
+	if len(nutrition_node_pool) == 0:
+		nutrition_node = nutrition_node_class_ref.instance()
+		add_child(nutrition_node)
+	else:
+		nutrition_node = nutrition_node_pool.pop_back()
+		nutrition_node.enable()
 	var target = origin_species_node if direction_backwards else end_species_node
 	var source = end_species_node if direction_backwards else origin_species_node
 	if type == "Nutrition":
@@ -62,4 +80,4 @@ func spawn_new_nutrition_node(direction_backwards, payload, type):
 	elif type == "Spreading":
 		source.second_next_turn_nutrition -= 200
 	nutrition_node.setup(direction_backwards, payload, target, type)
-	active_nutrition_nodes.append(nutrition_node)
+	active_nutrition_nodes.push_front(nutrition_node)

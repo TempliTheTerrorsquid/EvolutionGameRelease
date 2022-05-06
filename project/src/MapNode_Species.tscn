@@ -32,12 +32,23 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -19.0
-margin_top = -7.0
-margin_right = 19.0
-margin_bottom = 7.0
 size_flags_horizontal = 6
 size_flags_vertical = 6
+theme = SubResource( 2 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Panda"
+align = 1
+valign = 1
+
+[node name="EnviromentLabel" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme = SubResource( 2 )
+custom_colors/font_color = Color( 0.470588, 0.470588, 0.470588, 1 )
+text = "Bamboo"
 align = 1
 valign = 1
